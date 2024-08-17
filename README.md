@@ -17,7 +17,7 @@ pip install telemetry-sh
 First, you need to initialize the SDK with your API key.
 
 ```python
-from telemetry import Telemetry
+from telemetry_sh import Telemetry
 
 telemetry = Telemetry()
 telemetry.init("your_api_key")
