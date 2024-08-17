@@ -9,7 +9,8 @@ setup(
     url="https://github.com/telemetry-sh/telemetry-python",
     packages=find_packages(),
     install_requires=[
-        "requests"
+        "requests",
+        "aiohttp"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
