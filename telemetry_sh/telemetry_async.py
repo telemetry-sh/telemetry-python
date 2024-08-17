@@ -1,5 +1,4 @@
 import aiohttp
-import json
 from typing import Union, List
 
 
@@ -25,8 +24,7 @@ class TelemetryAsync:
             async with session.post(
                 f"{self.base_url}/log", headers=headers, json=body
             ) as response:
-                response = await response.text()
-                return json.loads(response)
+                return await response.json()
 
     async def query(self, query: str) -> dict:
         if not self.api_key:
@@ -42,5 +40,4 @@ class TelemetryAsync:
             async with session.post(
                 f"{self.base_url}/query", headers=headers, json=body
             ) as response:
-                response = await response.text()
-                return json.loads(response)
+                return await response.json()
