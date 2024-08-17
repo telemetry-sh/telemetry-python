@@ -17,7 +17,7 @@ pip install telemetry-sh
 First, you need to initialize the SDK with your API key.
 
 ```python
-from telemetry import Telemetry
+from telemetry_sh import Telemetry
 
 telemetry = Telemetry()
 telemetry.init("your_api_key")
@@ -43,6 +43,34 @@ You can query data using a custom query.
 ```python
 query = "SELECT * FROM your_table_name WHERE field1 = 'value1'"
 response = telemetry.query(query)
+print(response)
+```
+
+### Async usage
+
+If your codebase uses asyncio/async python, you can use `TelemetryAsync`:
+
+```python
+from telemetry import TelemetryAsync as Telemetry
+
+telemetry = Telemetry()
+telemetry.init("your_api_key")
+```
+
+The async SDK has the same structure as the sync one:
+```python
+data = {
+    "field1": "value1",
+    "field2": "value2"
+}
+response = await telemetry.log("your_table_name", data)
+print(response)
+```
+
+Similarly for query:
+```python
+query = "SELECT * FROM your_table_name WHERE field1 = 'value1'"
+response = await telemetry.query(query)
 print(response)
 ```
 
