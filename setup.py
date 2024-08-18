@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="telemetry-sh",
-    version="1.0.6",
+    version="1.0.8",
     description="A simple telemetry logging SDK for Python.",
     author="JR R",
     author_email="thebuilderjr93@gmail.com",
@@ -10,7 +10,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         "requests",
-        "aiohttp"
+        "aiohttp",
+        "async_timeout"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
