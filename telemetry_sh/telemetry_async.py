@@ -9,6 +9,12 @@ class TelemetryAsync:
 
     def init(self, api_key: str):
         self.api_key = api_key
+        
+    async def check_and_return(self, response: aiohttp.ClientResponse) -> dict:
+        respose_json = await response.json()
+        if respose_json.get("status", "error") == "error":
+            raise Exception(respose_json.get("message", "Unknown error"))
+        return respose_json
 
     async def log(self, table: str, data: Union[dict, List[dict]]) -> dict:
         if not self.api_key:
@@ -24,7 +30,7 @@ class TelemetryAsync:
             async with session.post(
                 f"{self.base_url}/log", headers=headers, json=body
             ) as response:
-                return await response.json()
+                return await self.check_and_return(response)
 
     async def query(self, query: str) -> dict:
         if not self.api_key:
@@ -40,4 +46,4 @@ class TelemetryAsync:
             async with session.post(
                 f"{self.base_url}/query", headers=headers, json=body
             ) as response:
-                return await response.json()
+                return await self.check_and_return(response)
