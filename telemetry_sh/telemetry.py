@@ -9,6 +9,12 @@ class Telemetry:
 
     def init(self, api_key: str):
         self.api_key = api_key
+        
+    def check_and_return(self, response: requests.Response) -> dict:
+        response_json = response.json()
+        if response_json.get("status", "error") == "error":
+            raise Exception(response_json.get("message", "Unknown error"))
+        return response_json
 
     def log(self, table: str, data: Union[dict, List[dict]]) -> dict:
         if not self.api_key:
@@ -25,7 +31,7 @@ class Telemetry:
         }
         
         response = requests.post(f"{self.base_url}/log", headers=headers, data=json.dumps(body))
-        return response.json()
+        return self.check_and_return(response)
 
     def query(self, query: str) -> dict:
         if not self.api_key:
@@ -43,6 +49,6 @@ class Telemetry:
         }
         
         response = requests.post(f"{self.base_url}/query", headers=headers, data=json.dumps(body))
-        return response.json()
+        return self.check_and_return(response)
 
 telemetry = Telemetry()
