@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="telemetry-sh",
-    version="1.0.8",
+    version="1.0.9",
     description="A simple telemetry logging SDK for Python.",
     author="JR R",
     author_email="thebuilderjr93@gmail.com",
