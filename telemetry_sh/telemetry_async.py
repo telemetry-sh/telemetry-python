@@ -1,5 +1,6 @@
 import aiohttp
 from typing import Union, List
+from telemetry_sh.telemetry_types import TelemetryQueryResponse, TelemetryQueryType, TelemetryLogResponse
 
 
 class TelemetryAsync:
@@ -16,7 +17,7 @@ class TelemetryAsync:
             raise Exception(respose_json.get("message", "Unknown error"))
         return respose_json
 
-    async def log(self, table: str, data: Union[dict, List[dict]]) -> dict:
+    async def log(self, table: str, data: Union[dict, List[dict]]) -> TelemetryLogResponse:
         if not self.api_key:
             raise ValueError(
                 "API key is not initialized. Please call init() with your API key."
@@ -32,7 +33,7 @@ class TelemetryAsync:
             ) as response:
                 return await self.check_and_return(response)
 
-    async def query(self, query: str) -> dict:
+    async def query(self, query: str) -> TelemetryQueryResponse[TelemetryQueryType]:
         if not self.api_key:
             raise ValueError(
                 "API key is not initialized. Please call init() with your API key."
