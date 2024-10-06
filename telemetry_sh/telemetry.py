@@ -1,6 +1,7 @@
 import requests
 import json
 from typing import Union, List
+from telemetry_sh.telemetry_types import TelemetryQueryResponse, TelemetryLogResponse, TelemetryQueryType
 
 class Telemetry:
     def __init__(self):
@@ -16,7 +17,7 @@ class Telemetry:
             raise Exception(response_json.get("message", "Unknown error"))
         return response_json
 
-    def log(self, table: str, data: Union[dict, List[dict]]) -> dict:
+    def log(self, table: str, data: Union[dict, List[dict]]) -> TelemetryLogResponse:
         if not self.api_key:
             raise ValueError("API key is not initialized. Please call init() with your API key.")
         
@@ -33,7 +34,7 @@ class Telemetry:
         response = requests.post(f"{self.base_url}/log", headers=headers, data=json.dumps(body))
         return self.check_and_return(response)
 
-    def query(self, query: str) -> dict:
+    def query(self, query: str) -> TelemetryQueryResponse[TelemetryQueryType]:
         if not self.api_key:
             raise ValueError("API key is not initialized. Please call init() with your API key.")
         
